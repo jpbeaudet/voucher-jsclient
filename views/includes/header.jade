@@ -1,0 +1,15 @@
+header
+    .container
+      .row
+        .col-sm-6
+          img(src='/img/fb-logo.png', height='42', width='60')
+          .logo Voucher-jsclient Dev Platform  
+             
+        .col-sm-6.hidden-xs
+          .row
+            .col-sm-5
+             .container-fluid
+               fb:login-button(scope='public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
+                 a.btn.btn-block.btn-social.btn-facebook(scope='public_profile,email', onlogin='checkLoginState();')
+                   span.fa.fa-facebook
+                   |  Sync your Facebook

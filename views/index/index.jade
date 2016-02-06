@@ -1,0 +1,48 @@
+extends ../layouts/default
+block content
+    article.container
+      .row
+        .col-sm-8
+          .login-main
+            h4
+              i.fa.fa-dashboard
+              |  Connect to the people you really trust !
+            span Some sample description text about the template goes here
+            h4
+              i.fa.fa-money
+              |  100%  Privacy Guaranteed
+            span Another description text about the template goes here
+            h4
+              i.fa.fa-mobile-phone
+              |  Voucher-mobile is in development
+            span Yet another sample description text can be placed in one line
+            h4
+              i.fa.fa-trophy
+              |  Easy to use and custmize with mobile friendly and responsive
+            span Your last description text about your startup or business
+        .col-sm-4
+          .login-main
+           center
+            fb:login-button(scope='public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
+              a.btn.btn-block.btn-social.btn-facebook(scope='public_profile,email', onlogin='checkLoginState();')
+                span.fa.fa-facebook
+                |  Sync your Facebook
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
+    script(src='/js/jquery.flot.min.js')
+    script(src='/app/control.js')
+    script.
+      window.fbAsyncInit = function() {
+      FB.init({
+      appId      : '159512431094694',
+      xfbml      : true,
+      version    : 'v2.5'
+      });
+      };
+      (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
