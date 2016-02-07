@@ -4,29 +4,95 @@ block content
       .row
         .col-sm-8
           .login-main
-            h4
-              i.fa.fa-dashboard
-              |  Connect to the people you really trust !
-            span Some sample description text about the template goes here
-            h4
-              i.fa.fa-money
-              |  100%  Privacy Guaranteed
-            span Another description text about the template goes here
-            h4
-              i.fa.fa-mobile-phone
-              |  Voucher-mobile is in development
-            span Yet another sample description text can be placed in one line
-            h4
-              i.fa.fa-trophy
-              |  Easy to use and custmize with mobile friendly and responsive
-            span Your last description text about your startup or business
-        .col-sm-4
-          .login-main
            center
             fb:login-button(scope='public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
               a.btn.btn-block.btn-social.btn-facebook(scope='public_profile,email', onlogin='checkLoginState();')
                 span.fa.fa-facebook
                 |  Sync your Facebook
+            h4
+              i.fa.fa-dashboard
+              |  People that you Vouched for :
+            .list-group
+              a.list-group-item.active(href='#')
+               .top_right 
+                button.btn.btn-success.btn-circle.btn-lg
+                  i.fa.fa-thumbs-up            
+               h4.list-group-item-heading 1st Circle
+               p.list-group-item-text Here will go the 1st Circle vouchers
+            .list-group
+              a.list-group-item(href='#')
+               .top_right 
+                button.btn.btn-warning.btn-circle.btn-lg
+                  i.fa.fa-thumbs-up            
+               h4.list-group-item-heading 2sd Circle
+               p.list-group-item-text Here will go the 1st Circle vouchers
+            .list-group
+              a.list-group-item(href='#')
+               .top_right 
+                button.btn.btn-danger.btn-circle.btn-lg
+                  i.fa.fa-thumbs-up            
+               h4.list-group-item-heading 3rd Circle
+               p.list-group-item-text Here will go the 1st Circle vouchers
+            h4
+              i.fa.fa-search
+              |  People that vouched for you :
+            .list-group
+              a.list-group-item.active(href='#')
+               .top_right 
+                button.btn.btn-success.btn-circle.btn-lg
+                  i.fa.fa-thumbs-up            
+               h4.list-group-item-heading 1st Circle
+               p.list-group-item-text Here will go the 1st Circle vouchers
+            .list-group
+              a.list-group-item(href='#')
+               .top_right 
+                button.btn.btn-warning.btn-circle.btn-lg
+                  i.fa.fa-thumbs-up            
+               h4.list-group-item-heading 2sd Circle
+               p.list-group-item-text Here will go the 1st Circle vouchers
+            .list-group
+              a.list-group-item(href='#')
+               .top_right 
+                button.btn.btn-danger.btn-circle.btn-lg
+                  i.fa.fa-thumbs-up            
+               h4.list-group-item-heading 3rd Circle
+               p.list-group-item-text Here will go the 1st Circle vouchers
+
+        .col-sm-4
+          .login-main
+            h4
+              i.fa.fa-dashboard(style='margin-top:1cm;')
+              |  Vouch for the people you really trust :
+           .panel.panel-primary
+             .panel-heading.c-list
+               span.title Your Friends
+             ul#contact-list.list-group
+               li.list-group-item
+                 .col-xs-12.col-sm-3
+                   img.img-responsive.img-circle(src='http://api.randomuser.me/portraits/men/49.jpg', alt='Scott Stevens')
+                 .col-xs-12.col-sm-9
+                   .top_right 
+                     a.btn.btn-sm.btn-primary(href='#') Vouch !
+                   span.name Scott Stevens
+                   br
+                   i Friend since:
+                   br
+                   i Some exerp or description here
+
+                 .clearfix
+               li.list-group-item
+                 .col-xs-12.col-sm-3
+                   img.img-responsive.img-circle(src='http://api.randomuser.me/portraits/men/97.jpg', alt='Seth Frazier')
+                 .col-xs-12.col-sm-9
+                   .top_right 
+                     a.btn.btn-sm.btn-primary(href='#') Vouch !
+                   span.name Seth Frazier
+                   br
+                   i Friend since:
+                   br
+                   i Some exerp or description here 
+                 .clearfix
+           
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
     script(src='/js/jquery.flot.min.js')
