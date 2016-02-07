@@ -32,7 +32,7 @@ body{
 .logo{
 	color: white;
 	margin: 0;
-	font-size: 20px;
+	font-size: 2em;
 	padding: 4px 0;
 	padding-bottom: 15px;
 
@@ -71,6 +71,7 @@ header .btn-header-login{
 footer hr{
 	margin-top: 0px;
 	padding-top: 0px;
+
 }
 .footer-options ul{
 	clear: both;

@@ -27,7 +27,7 @@
         }else{   
             $('.c-search').closest('.row').slideDown(100);
         }
-        
+    });  
 })(jQuery);
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
