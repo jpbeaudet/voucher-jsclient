@@ -1,36 +1,56 @@
 extends ../layouts/default
 block content
+    .container
+      .fb-profile
+        img.fb-image-lg(align='left', src='http://lorempixel.com/850/280/nightlife/5/', alt='Profile image example')
+        img.fb-image-profile.thumbnail(align='left', src='http://lorempixel.com/180/180/people/9/', alt='Profile image example')
+        .fb-profile-text
+          h1 Eli Macy
+          h3 Description :
+          .row
+           p Item1
+           p Item 2
+          .container(style='margin-left:1cm;')
+            fb:login-button(scope='public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
+              a.btn.btn-block.btn-social.btn-facebook(scope='public_profile,email', onlogin='checkLoginState();')
+                span.fa.fa-facebook
+                |  Sync your Facebook
+    // /container
     article.container
       .row
         .col-sm-8
           .login-main
            center
-            fb:login-button(scope='public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
-              a.btn.btn-block.btn-social.btn-facebook(scope='public_profile,email', onlogin='checkLoginState();')
-                span.fa.fa-facebook
-                |  Sync your Facebook
             h4
-              i.fa.fa-dashboard
+              i.fa.fa-thumbs-up
               |  People that you Vouched for :
             .list-group
               a.list-group-item.active(href='#')
                .top_right 
                 button.btn.btn-success.btn-circle.btn-lg
-                  i.fa.fa-thumbs-up            
+                  img.img-responsive.img-circle(src='/img/IMG_jp.JPG')            
                h4.list-group-item-heading 1st Circle
                p.list-group-item-text Here will go the 1st Circle vouchers
+              a.list-group-item(href='#')
+               .row
+                .col-sm-2
+                  img.img-responsive.img-circle(src='http://api.randomuser.me/portraits/men/49.jpg', alt='Scott Stevens', style='width:25%;height:25%;')
+                  p Scott Stevens
+                .col-sm-2
+                  img.img-responsive.img-circle(src='http://api.randomuser.me/portraits/men/97.jpg', alt='Seth Frazier', style='width:25%;height:25%;')
+                  p Seth Frazier
             .list-group
               a.list-group-item(href='#')
                .top_right 
                 button.btn.btn-warning.btn-circle.btn-lg
-                  i.fa.fa-thumbs-up            
+                  img.img-responsive.img-circle(src='/img/IMG_jp.JPG')          
                h4.list-group-item-heading 2sd Circle
                p.list-group-item-text Here will go the 1st Circle vouchers
             .list-group
               a.list-group-item(href='#')
                .top_right 
                 button.btn.btn-danger.btn-circle.btn-lg
-                  i.fa.fa-thumbs-up            
+                  img.img-responsive.img-circle(src='/img/IMG_jp.JPG')        
                h4.list-group-item-heading 3rd Circle
                p.list-group-item-text Here will go the 1st Circle vouchers
             h4
@@ -40,28 +60,28 @@ block content
               a.list-group-item.active(href='#')
                .top_right 
                 button.btn.btn-success.btn-circle.btn-lg
-                  i.fa.fa-thumbs-up            
+                  img.img-responsive.img-circle(src='/img/IMG_jp.JPG')           
                h4.list-group-item-heading 1st Circle
                p.list-group-item-text Here will go the 1st Circle vouchers
             .list-group
               a.list-group-item(href='#')
                .top_right 
                 button.btn.btn-warning.btn-circle.btn-lg
-                  i.fa.fa-thumbs-up            
+                  img.img-responsive.img-circle(src='/img/IMG_jp.JPG')           
                h4.list-group-item-heading 2sd Circle
                p.list-group-item-text Here will go the 1st Circle vouchers
             .list-group
               a.list-group-item(href='#')
                .top_right 
                 button.btn.btn-danger.btn-circle.btn-lg
-                  i.fa.fa-thumbs-up            
+                  img.img-responsive.img-circle(src='/img/IMG_jp.JPG')         
                h4.list-group-item-heading 3rd Circle
                p.list-group-item-text Here will go the 1st Circle vouchers
 
         .col-sm-4
           .login-main
             h4
-              i.fa.fa-dashboard(style='margin-top:1cm;')
+              i.fa.fa-thumbs-up
               |  Vouch for the people you really trust :
            .panel.panel-primary
              .panel-heading.c-list
