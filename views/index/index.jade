@@ -8,11 +8,12 @@ block content
           span#username
           span#status
          .container(style='margin-left:1cm;')
+          .container#fblogin
             fb:login-button(scope='user_about_me,user_location,public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
               a.btn.btn-block.btn-social.btn-facebook(scope='user_events,public_profile,email', onlogin='checkLoginState();')
                 span.fa.fa-facebook
                 |  Sync your Facebook
-         .container
+         .container-fluid
           h3 Description :
           .row
            .container
@@ -24,7 +25,7 @@ block content
              li
               span#work
              li
-              span#quotes
+              i Please note that your data will not be saved into our sever , so if you refresh the page it will need to be re-sync.
 
 
     // /container
@@ -124,6 +125,7 @@ block content
                    br
                    i Some exerp or description here 
                  .clearfix
+               span#friends
            
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')

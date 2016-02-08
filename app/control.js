@@ -44,6 +44,7 @@ function statusChangeCallback(response) {
   // for FB.getLoginStatus().
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
+	$('#fblogin').hide();
     testAPI();
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
@@ -131,5 +132,14 @@ function testAPI() {
 	    document.getElementById('work').innerHTML = "<p><strong> Work at :</strong><i>"+response.work[index].employer.name+"</i> since "+ response.work[index].start_date+"<p>";	   
 
   });
-
+  FB.api('/v2.0/me?fields=friendlists', function(response) {
+	    console.log('Friend_list Response: ' + JSON.stringify(response)); 
+	    for(x in response.friendlists.data){
+	    	console.log('Friend_list: nb '+ x + JSON.stringify(response.friendlists.data[x].id)); 
+		    $('#friends').append('<li class="list-group-item"><div class="col-xs-12 col-sm-3"><img src="http://api.randomuser.me/portraits/men/49.jpg" alt="Scott Stevens" class="img-responsive img-circle"/></div><div class="col-xs-12 col-sm-9"><div class="top_right"> <a href="#" class="btn btn-sm btn-primary">Vouch !</a></div><span class="name">Scott Stevens</span><br/><i>'+response.friendlists.data[x].id+ '</i></div><div class="clearfix"></div></li>');
+   	
+	    }
+	    
+	    
+  });
 }
