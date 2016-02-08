@@ -2,19 +2,31 @@ extends ../layouts/default
 block content
     .container
       .fb-profile
-        img.fb-image-lg(align='left', src='http://lorempixel.com/850/280/nightlife/5/', alt='Profile image example')
-        img.fb-image-profile.thumbnail(align='left', src='http://lorempixel.com/180/180/people/9/', alt='Profile image example')
+        img.fb-image-lg#cover(align='left', src='http://lorempixel.com/850/280/nightlife/5/', alt='Profile image example')
+        img.fb-image-profile.thumbnail#profile_picture(align='left', src='http://lorempixel.com/180/180/people/9/', alt='Profile image example')
         .fb-profile-text
-          h1 Eli Macy
-          h3 Description :
-          .row
-           p Item1
-           p Item 2
-          .container(style='margin-left:1cm;')
-            fb:login-button(scope='public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
-              a.btn.btn-block.btn-social.btn-facebook(scope='public_profile,email', onlogin='checkLoginState();')
+          span#username
+          span#status
+         .container(style='margin-left:1cm;')
+            fb:login-button(scope='user_about_me,user_location,public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
+              a.btn.btn-block.btn-social.btn-facebook(scope='user_events,public_profile,email', onlogin='checkLoginState();')
                 span.fa.fa-facebook
                 |  Sync your Facebook
+         .container
+          h3 Description :
+          .row
+           .container
+            ul.list-unstyled
+             li
+              span#gender
+             li
+              span#location
+             li
+              span#work
+             li
+              span#quotes
+
+
     // /container
     article.container
       .row

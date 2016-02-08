@@ -1,5 +1,7 @@
 
+	
 (function($){
+
 	
     /* BOOTSNIPP FULLSCREEN FIX */
     if (window.location == window.parent.location) {
@@ -27,8 +29,11 @@
         }else{   
             $('.c-search').closest('.row').slideDown(100);
         }
-    });  
+    }); 
+
 })(jQuery);
+///setting variable avlues to default when logged off
+document.getElementById('username').innerHTML = "<h1>Please sync your Facebook account too start Vouching !</h1>";
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
   console.log('statusChangeCallback');
@@ -57,7 +62,8 @@ function statusChangeCallback(response) {
 // code below.
 function checkLoginState() {
   FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
+
+    statusChangeCallback(response); 
   });
 }
 
@@ -101,9 +107,29 @@ FB.getLoginStatus(function(response) {
 // successful.  See statusChangeCallback() for when this call is made.
 function testAPI() {
   console.log('Welcome!  Fetching your information.... ');
-  FB.api('/me', function(response) {
+  var id;
+  FB.api('/me?fields=id,name,picture,cover', function(response) {
     console.log('Successful login for: ' + response.name);
     document.getElementById('status').innerHTML =
-      'Thanks for logging in, ' + response.name + '!';
+      'Your Facebook ID, ' +"<i>"+ response.id +"</i>";
+    id = response.id;
+    document.getElementById('username').innerHTML = "<h1>"+response.name+"</h1>";
+    $('#profile_picture').attr("src",response.picture.data.url);
+    $('#cover').attr("src",response.cover.source);
   });
+  FB.api('/v2.0/me?fields=work,location,gender,quotes', function(response) {
+	    console.log('Response: ' + JSON.stringify(response));
+	    document.getElementById('gender').innerHTML = "<p><strong> Gender :</strong><i>"+response.gender+"</i><p>";
+	    document.getElementById('location').innerHTML = "<p><strong> Location :</strong><i>"+response.location.name+"</i><p>";
+	    var index = 0;
+	    for(x in response.work){
+	    if (response.work[x].start_date[1] == undefined){
+	    index=x;
+	    continue;
+	    }
+	    }
+	    document.getElementById('work').innerHTML = "<p><strong> Work at :</strong><i>"+response.work[index].employer.name+"</i> since "+ response.work[index].start_date+"<p>";	   
+
+  });
+
 }
