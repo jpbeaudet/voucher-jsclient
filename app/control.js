@@ -1,14 +1,14 @@
-
+// Author: Jean-Philippe Beaudet @ S3R3NITY Technology
+// Voucherjs
+// Version 0.0.1
 	
 (function($){
-
 	
     /* BOOTSNIPP FULLSCREEN FIX */
     if (window.location == window.parent.location) {
         $('#back-to-bootsnipp').removeClass('hide');
     }
-    
-    
+        
     $('[data-toggle="tooltip"]').tooltip();
     
     $('#fullscreen').on('click', function(event) {
@@ -32,8 +32,10 @@
     }); 
 
 })(jQuery);
+
 ///setting variable avlues to default when logged off
 document.getElementById('username').innerHTML = "<h1>Please sync your Facebook account too start Vouching !</h1>";
+
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
   console.log('statusChangeCallback');
@@ -45,7 +47,7 @@ function statusChangeCallback(response) {
   if (response.status === 'connected') {
     // Logged into your app and Facebook.
 	$('#fblogin').hide();
-    testAPI();
+    voucherAPI();
   } else if (response.status === 'not_authorized') {
     // The person is logged into Facebook, but not your app.
     document.getElementById('status').innerHTML = 'Please log ' +
@@ -104,47 +106,39 @@ FB.getLoginStatus(function(response) {
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-// Here we run a very simple test of the Graph API after login is
-// successful.  See statusChangeCallback() for when this call is made.
-function testAPI() {
+// VoucherApi
+// Here will go all the call for the HTMLfactory
+////////////////////////////////////////////////
+function voucherAPI() {
   console.log('Welcome!  Fetching your information.... ');
-  var id;
-  FB.api('/me?fields=id,name,picture,cover', function(response) {
+  FB.api('/v2.0/me?fields=id,name,picture,cover,work,location,gender', function(response) {
     console.log('Successful login for: ' + response.name);
-    document.getElementById('status').innerHTML =
-      'Your Facebook ID, ' +"<i>"+ response.id +"</i>";
-    id = response.id;
-    document.getElementById('username').innerHTML = "<h1>"+response.name+"</h1>";
+    //console.log('Response: ' + JSON.stringify(response));
+
     $('#profile_picture').attr("src",response.picture.data.url);
     $('#cover').attr("src",response.cover.source);
+    document.getElementById('username').innerHTML = "<h1>"+response.name+"</h1>";
+	document.getElementById('gender').innerHTML = "<p><strong> Gender :</strong><i>"+response.gender+"</i><p>";
+	document.getElementById('location').innerHTML = "<p><strong> Location :</strong><i>"+response.location.name+"</i><p>";
+	var index = 0;
+	for(x in response.work){
+	if (response.work[x].start_date[1] == undefined){
+	index=x;
+	continue;
+	}
+	}
+	document.getElementById('work').innerHTML = "<p><strong> Work at :</strong><i>"+response.work[index].employer.name+"</i> since "+ response.work[index].start_date+"<p>";	   
   });
-  FB.api('/v2.0/me?fields=work,location,gender,quotes', function(response) {
-	    console.log('Response: ' + JSON.stringify(response));
-	    document.getElementById('gender').innerHTML = "<p><strong> Gender :</strong><i>"+response.gender+"</i><p>";
-	    document.getElementById('location').innerHTML = "<p><strong> Location :</strong><i>"+response.location.name+"</i><p>";
-	    var index = 0;
-	    for(x in response.work){
-	    if (response.work[x].start_date[1] == undefined){
-	    index=x;
-	    continue;
-	    }
-	    }
-	    document.getElementById('work').innerHTML = "<p><strong> Work at :</strong><i>"+response.work[index].employer.name+"</i> since "+ response.work[index].start_date+"<p>";	   
-
-  });
+  
+  // Here will go the friend dealing logics
   FB.api('/v2.0/me?fields=friendlists', function(response) {
 	    console.log('Friend_list Response: ' + JSON.stringify(response)); 
-	    for(x in response.friendlists.data){
-	    	console.log('Friend_list: nb '+ x + JSON.stringify(response.friendlists.data[x].id)); 
-		    $('#friends').append('<li class="list-group-item"><div class="col-xs-12 col-sm-3"><img src="http://api.randomuser.me/portraits/men/49.jpg" alt="Scott Stevens" class="img-responsive img-circle"/></div><div class="col-xs-12 col-sm-9"><i class="fa fa-facebook"></i>&nbsp&nbsp<div class="top_right"> <a href="#" class="btn btn-sm btn-primary">Vouch !</a></div><span class="name">Scott Stevens</span><br/><i>'+response.friendlists.data[x].id+ '</i> <label class="btn btn-success btn-circle"> 12 </label>&nbsp<label class="btn btn-warning btn-circle"> 4 </label>&nbsp<label class="btn btn-danger btn-circle"> 234 </label></div><div class="clearfix"></div></li>');
-		    $('#defaultfriend').hide();
-	    }
-		 console.log( "Next friendlist page = " + response.friendlists.paging.next);
+	    var friends = new friendlist(response);
+	    $('#friends').append(friends.response);
+		$('#defaultfriend').hide();
 	    if(response.friendlists.paging.next){
 	    	$.get( response.friendlists.paging.next, function( data ) {
-	    		  console.log( "Next friendlist page = " + data);
-	    		});
-	    }
-	    
+	    	});
+	    }	    
   });
 }

@@ -10,9 +10,8 @@ block content
          .container(style='margin-left:1cm;')
           .container#fblogin
             fb:login-button(scope='user_about_me,user_location,public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
-              a.btn.btn-block.btn-social.btn-facebook(scope='user_events,public_profile,email', onlogin='checkLoginState();')
-                span.fa.fa-facebook
-                |  Sync your Facebook
+              span.fa.fa-facebook
+              |  Sync your Facebook
          .container-fluid
           h3 Description :
           .row
@@ -116,6 +115,7 @@ block content
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js', integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS', crossorigin='anonymous')
     script(src='/js/jquery.flot.min.js')
     script(src='/app/control.js')
+    script(src='/app/factory.js')
     script.
       window.fbAsyncInit = function() {
       FB.init({

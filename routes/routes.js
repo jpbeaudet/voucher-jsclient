@@ -1,6 +1,6 @@
 // Author: Jean-Philippe Beaudet @ S3R3NITY Technology
-// 
-//
+// Voucherjs
+// Version 0.0.1
 
 var index = require('../routes/index');
 
