@@ -136,10 +136,15 @@ function testAPI() {
 	    console.log('Friend_list Response: ' + JSON.stringify(response)); 
 	    for(x in response.friendlists.data){
 	    	console.log('Friend_list: nb '+ x + JSON.stringify(response.friendlists.data[x].id)); 
-		    $('#friends').append('<li class="list-group-item"><div class="col-xs-12 col-sm-3"><img src="http://api.randomuser.me/portraits/men/49.jpg" alt="Scott Stevens" class="img-responsive img-circle"/></div><div class="col-xs-12 col-sm-9"><div class="top_right"> <a href="#" class="btn btn-sm btn-primary">Vouch !</a></div><span class="name">Scott Stevens</span><br/><i>'+response.friendlists.data[x].id+ '</i></div><div class="clearfix"></div></li>');
-   	
+		    $('#friends').append('<li class="list-group-item"><div class="col-xs-12 col-sm-3"><img src="http://api.randomuser.me/portraits/men/49.jpg" alt="Scott Stevens" class="img-responsive img-circle"/></div><div class="col-xs-12 col-sm-9"><i class="fa fa-facebook"></i>&nbsp&nbsp<div class="top_right"> <a href="#" class="btn btn-sm btn-primary">Vouch !</a></div><span class="name">Scott Stevens</span><br/><i>'+response.friendlists.data[x].id+ '</i> <label class="btn btn-success btn-circle"> 12 </label>&nbsp<label class="btn btn-warning btn-circle"> 4 </label>&nbsp<label class="btn btn-danger btn-circle"> 234 </label></div><div class="clearfix"></div></li>');
+		    $('#defaultfriend').hide();
 	    }
-	    
+		 console.log( "Next friendlist page = " + response.friendlists.paging.next);
+	    if(response.friendlists.paging.next){
+	    	$.get( response.friendlists.paging.next, function( data ) {
+	    		  console.log( "Next friendlist page = " + data);
+	    		});
+	    }
 	    
   });
 }
