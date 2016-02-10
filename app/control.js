@@ -30,6 +30,28 @@
             $('.c-search').closest('.row').slideDown(100);
         }
     }); 
+    
+    
+    ///// Buttons sections
+    /////////////////////////////////////////////////////////
+    
+    // sync your facebook info
+    
+    $('#sync_your_facebook').on('click', function(event) {
+    	info = document.getElementById('info');
+    	info_en = '<div class="alert alert-info" id="info" role="alert"><button type="button" aria-label="Left Align" style="border:none;margin-bottom:10px;" id="remove_info" href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="align:top;"></span></button><h4> Synchronise your Facebook</h4> <p> You must synchronise your facebook account for the application to allow you to start vouching. Simply click the button "sync your facebook", accept to give the required permissions and then start Vouching rigth away! </p></div>';
+    	if(info != null){
+    		$(info).hide();
+    	}
+		$('#info_placeholder').append(info_en);
+    	$(this).hide(); 
+        $('#remove_info').on('click', function(event) {
+        	console.log("pouf");
+        	info = document.getElementById('info');
+        	$('#info').remove();
+        	$('#sync_your_facebook').show();
+        });
+    });
 
 })(jQuery);
 
@@ -133,8 +155,8 @@ function voucherAPI() {
   // Here will go the friend dealing logics
   FB.api('/v2.0/me?fields=friendlists', function(response) {
 	    console.log('Friend_list Response: ' + JSON.stringify(response)); 
-	    var friends = new friendlist(response);
-	    $('#friends').append(friends.response);
+	    var factory = new HTMLfactory(response);
+	    $('#friends').append(factory.friends);
 		$('#defaultfriend').hide();
 	    if(response.friendlists.paging.next){
 	    	$.get( response.friendlists.paging.next, function( data ) {

@@ -12,7 +12,10 @@ block content
             fb:login-button(scope='user_about_me,user_location,public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
               span.fa.fa-facebook
               |  Sync your Facebook
-         .container-fluid
+            &nbsp
+            button.btn.btn-default#sync_your_facebook(type='button', aria-label='Left Align',style='border:none;')
+             span.glyphicon.glyphicon-info-sign(aria-hidden='true')
+         .container-fluid#info_placeholder
           h3 Description :
           .row
            .container
