@@ -39,12 +39,14 @@
     
     $('#sync_your_facebook').on('click', function(event) {
     	info = document.getElementById('info');
-    	info_en = '<div class="alert alert-info" id="info" role="alert"><button type="button" aria-label="Left Align" style="border:none;margin-bottom:10px;" id="remove_info" href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="align:top;"></span></button><h4> Synchronise your Facebook</h4> <p> You must synchronise your facebook account for the application to allow you to start vouching. Simply click the button "sync your facebook", accept to give the required permissions and then start Vouching rigth away! </p></div>';
+    	info_en = '<div class="alert alert-info" id="info" role="alert" style="margin-top:20px;"><button type="button" aria-label="Left Align" style="border:none;margin-bottom:10px;" id="remove_info" href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" style="align:top;"></span></button><h4> Synchronise your Facebook</h4> <p> You must synchronise your facebook account for the application to allow you to start vouching. Simply click the button "sync your facebook", accept to give the required permissions and then start Vouching rigth away! </p></div>';
     	if(info != null){
-    		$(info).hide();
+    		$(info).hide( "slow", function() {
+		     });
     	}
-		$('#info_placeholder').append(info_en);
-    	$(this).hide(); 
+		$('#info_placeholder').prepend(info_en);
+    	$(this).hide( "slow", function() {
+	     });; 
         $('#remove_info').on('click', function(event) {
         	console.log("pouf");
         	info = document.getElementById('info');
@@ -56,7 +58,7 @@
 })(jQuery);
 
 ///setting variable avlues to default when logged off
-document.getElementById('username').innerHTML = "<h1>Please sync your Facebook account too start Vouching !</h1>";
+document.getElementById('username').innerHTML = "<h1> Sync your Facebook account and start Vouching !</h1>";
 
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
@@ -133,15 +135,16 @@ FB.getLoginStatus(function(response) {
 ////////////////////////////////////////////////
 function voucherAPI() {
   console.log('Welcome!  Fetching your information.... ');
+  // Fetch profile information for intial jquery setup
   FB.api('/v2.0/me?fields=id,name,picture,cover,work,location,gender', function(response) {
     console.log('Successful login for: ' + response.name);
     //console.log('Response: ' + JSON.stringify(response));
-
     $('#profile_picture').attr("src",response.picture.data.url);
     $('#cover').attr("src",response.cover.source);
     document.getElementById('username').innerHTML = "<h1>"+response.name+"</h1>";
-	document.getElementById('gender').innerHTML = "<p><strong> Gender :</strong><i>"+response.gender+"</i><p>";
-	document.getElementById('location').innerHTML = "<p><strong> Location :</strong><i>"+response.location.name+"</i><p>";
+	document.getElementById('gender').innerHTML = "<p><strong> Gender : </strong><i> "+response.gender+"</i></p>";
+	document.getElementById('location').innerHTML = "<p><strong> Location : </strong><i> "+response.location.name+"</i></p>";
+	document.getElementById('facebook').innerHTML = '<a href="https://facebook.com/"'+response.id+'><i> https://facebook.com/'+ response.id+ '</i></a><br>';	
 	var index = 0;
 	for(x in response.work){
 	if (response.work[x].start_date[1] == undefined){
@@ -149,16 +152,26 @@ function voucherAPI() {
 	continue;
 	}
 	}
-	document.getElementById('work').innerHTML = "<p><strong> Work at :</strong><i>"+response.work[index].employer.name+"</i> since "+ response.work[index].start_date+"<p>";	   
+	document.getElementById('work').innerHTML = "<p><strong> Work at : </strong><i> "+response.work[index].employer.name+"</i> since "+ response.work[index].start_date+"<p>";	   
   });
   
   // Here will go the friend dealing logics
   FB.api('/v2.0/me?fields=friendlists', function(response) {
-	    console.log('Friend_list Response: ' + JSON.stringify(response)); 
+	    console.log('Friend_list Response: ' + JSON.stringify(response));
+	    
+	    // Voucher api call to fetch current user status
+	    //$.get( "http:localhost:8080", function( data ) {
+    	//});
+	    
+	    // send the curated response object the the status object to the HTML factory
+	    // TODO: add the status object to the HTMLfactory constructor
+    	// TODO: add the description and name to snippet
 	    var factory = new HTMLfactory(response);
 	    $('#friends').append(factory.friends);
 		$('#defaultfriend').hide();
 	    if(response.friendlists.paging.next){
+	    	// if there was another page of friends 
+	    	// TODO: add a snippet to follow page or scrollable div to contaain all friends
 	    	$.get( response.friendlists.paging.next, function( data ) {
 	    	});
 	    }	    

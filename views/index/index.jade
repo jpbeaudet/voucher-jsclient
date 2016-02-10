@@ -6,7 +6,7 @@ block content
         img.fb-image-profile.thumbnail#profile_picture(align='left', src='http://lorempixel.com/180/180/people/9/', alt='Profile image example')
         .fb-profile-text
           span#username
-          span#status
+          span#facebook
          .container(style='margin-left:1cm;')
           .container#fblogin
             fb:login-button(scope='user_about_me,user_location,public_profile,email,user_friends,user_photos,user_posts,user_relationships,user_relationship_details,user_work_history,user_friends,read_custom_friendlists', onlogin='checkLoginState();')
@@ -15,6 +15,7 @@ block content
             &nbsp
             button.btn.btn-default#sync_your_facebook(type='button', aria-label='Left Align',style='border:none;')
              span.glyphicon.glyphicon-info-sign(aria-hidden='true')
+             
          .container-fluid#info_placeholder
           h3 Description :
           .row
@@ -26,11 +27,12 @@ block content
               span#location
              li
               span#work
-             li
-              i Please note that your data will not be saved into our sever , so if you refresh the page it will need to be re-sync.
+              
 
+         .alert.alert-info(role='alert' style='margin-top:10px;')
+           h4 Only the people you Vouch for will be notified !
+           i NOTA : Please note that your personal informations WILL NOT be saved into our server, so if you refresh the page you will need to re-sync your accounts.
 
-    // /container
     article.container
       .row
         .col-sm-8
@@ -45,7 +47,7 @@ block content
                 button.btn.btn-success.btn-circle.btn-lg
                   img.img-responsive.img-circle(src='/img/IMG_jp.JPG')            
                h4.list-group-item-heading 1st Circle
-               p.list-group-item-text Here will go the 1st Circle vouchers
+               p.list-group-item-text Your first Circle of trust 
               a.list-group-item(href='#')
                .row
                 .col-sm-2
@@ -59,15 +61,15 @@ block content
                .top_right 
                 button.btn.btn-warning.btn-circle.btn-lg
                   img.img-responsive.img-circle(src='/img/IMG_jp.JPG')          
-               h4.list-group-item-heading 2sd Circle
-               p.list-group-item-text Here will go the 1st Circle vouchers
+               h4.list-group-item-heading 2nd Circle
+               p.list-group-item-text The people your first circle trust 
             .list-group
               a.list-group-item(href='#')
                .top_right 
                 button.btn.btn-danger.btn-circle.btn-lg
                   img.img-responsive.img-circle(src='/img/IMG_jp.JPG')        
                h4.list-group-item-heading 3rd Circle
-               p.list-group-item-text Here will go the 1st Circle vouchers
+               p.list-group-item-text The people that are trusted by your second circle. 
             h4
               i.fa.fa-search
               |  People that vouched for you :
@@ -76,22 +78,9 @@ block content
                .top_right 
                 button.btn.btn-success.btn-circle.btn-lg
                   img.img-responsive.img-circle(src='/img/IMG_jp.JPG')           
-               h4.list-group-item-heading 1st Circle
-               p.list-group-item-text Here will go the 1st Circle vouchers
-            .list-group
-              a.list-group-item(href='#')
-               .top_right 
-                button.btn.btn-warning.btn-circle.btn-lg
-                  img.img-responsive.img-circle(src='/img/IMG_jp.JPG')           
-               h4.list-group-item-heading 2sd Circle
-               p.list-group-item-text Here will go the 1st Circle vouchers
-            .list-group
-              a.list-group-item(href='#')
-               .top_right 
-                button.btn.btn-danger.btn-circle.btn-lg
-                  img.img-responsive.img-circle(src='/img/IMG_jp.JPG')         
-               h4.list-group-item-heading 3rd Circle
-               p.list-group-item-text Here will go the 1st Circle vouchers
+               h4.list-group-item-heading Voucher
+               p.list-group-item-text You are in their trust circle
+
 
         .col-sm-4
           .login-main
