@@ -14,8 +14,10 @@ module.exports = function (app) {
 	app.get('/', index.index);
 
 	///api routes
+	//////////////////////////////
 	app.post('/authenticate',api.authenticate);
 	app.post('/setup',api.authenticate);
+	
 	// error handlers
 	/////////////////////////////////
 	

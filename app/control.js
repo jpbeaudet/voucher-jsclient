@@ -153,17 +153,16 @@ function voucherAPI() {
 	}
 	}
 
-	//log to voucher api to retreive the token
-	//$.post( 'http://127.0.0.1:4006/api/authenticate?name'+ response.name+ '=&password='+response.id,{"Access-Control-Allow-Origin": "*"})
-	$.post( '/authenticate',{"name": response.name,"password":response.id})	
+	//log to voucher api to retrieve the token
+	$.post( '/authenticate',{"name": response.name,"password":response.id,"client":"voucher"})	
 	.done (function( data ) {
-	console.log("data receive from voucher api authenticate" +JSON.stringify(data));
+	console.log("Voucher API response for authenticate:" +JSON.stringify(data));
 	if (data.sucess == "false"){
 		 //if not registered register
-		$.post( '/setup',{"name": response.name,"password":response.id})	
+		$.post( '/setup',{"name": response.name,"password":response.id,"client":"voucher"})	
 		.done (function( data ) { 
-			console.log("NOT REGISTERED data receive from voucher api setup" +JSON.stringify(data));	
-		});
+			console.log("Voucher API response for setup:" +JSON.stringify(data));
+			});
 	}
 	});
 	

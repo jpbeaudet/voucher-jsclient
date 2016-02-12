@@ -10,8 +10,15 @@ exports.authenticate = function (req, res) {
 	var name = req.body.name;
 	name = name.replace(" ","_").toLowerCase();
 	var password = req.body.password;
-	console.log("From request:" + name);
-	console.log("From request:" + password);
+	var client = req.body.client;
+	var admin;
+	if(client == "voucher"){
+		admin = false;
+	}else{
+		admin = true;
+	}
+	//console.log("From request:" + name);
+	//console.log("From request:" + password);
 	// Set the headers
 	var headers = {
 	    'User-Agent':       'Super Agent/0.0.1',
@@ -24,18 +31,18 @@ exports.authenticate = function (req, res) {
         url: 'http://localhost:4006/api/authenticate/',
         method: 'POST',
         headers: headers,
-        qs: {'name': name, 'password': password}
+        qs: {'name': name, 'password': password,'admin': admin}
     };
      
     // Start the request
     request(options, function (error, response, body) {
     	if(error){
-    		console.log("From request authenticate - error:" + error);
+    		//console.log("From request authenticate - error:" + error);
     	}
         if (!error && response.statusCode == 200) {
             // Print out the response body
-            console.log("From request authenticate - api body: " +body);
-            console.log("From request authenticate - api response: " +JSON.stringify(response));
+            //console.log("From request authenticate - api body: " +body);
+            //console.log("From request authenticate - api response: " +JSON.stringify(response));
             res.send(body);
         }
     });
@@ -47,8 +54,15 @@ exports.setup = function (req, res) {
 	var name = req.body.name;
 	name = name.replace(" ","_").toLowerCase();
 	var password = req.body.password;
-	console.log("From request:" + name);
-	console.log("From request:" + password);
+	var client = req.body.client;
+	var admin;
+	if(client == "voucher"){
+		admin = false;
+	}else{
+		admin = true;
+	}
+	//console.log("From request:" + name);
+	//console.log("From request:" + password);
 	// Set the headers
 	var headers = {
 	    'User-Agent':       'Super Agent/0.0.1',
@@ -61,18 +75,18 @@ exports.setup = function (req, res) {
         url: 'http://localhost:4006/api/setup/',
         method: 'POST',
         headers: headers,
-        qs: {'name': name, 'password': password}
+        qs: {'name': name, 'password': password,'admin': admin}
     };
      
     // Start the request
     request(options, function (error, response, body) {
     	if(error){
-    		console.log("From request setup - error:" + error);
+    		//console.log("From request setup - error:" + error);
     	}
         if (!error && response.statusCode == 200) {
             // Print out the response body
-            console.log("From request setup - api body: " +body);
-            console.log("From request setup - api response: " +JSON.stringify(response));
+            //console.log("From request setup - api body: " +body);
+            //console.log("From request setup - api response: " +JSON.stringify(response));
             res.send(body);
         }
     });
