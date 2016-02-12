@@ -17,8 +17,8 @@ exports.authenticate = function (req, res) {
 	}else{
 		admin = true;
 	}
-	//console.log("From request:" + name);
-	//console.log("From request:" + password);
+	console.log("From request authenticate - name:" + name);
+	console.log("From request authenticate - passowrd:" + password);
 	// Set the headers
 	var headers = {
 	    'User-Agent':       'Super Agent/0.0.1',
@@ -28,10 +28,12 @@ exports.authenticate = function (req, res) {
 	
 	// Configure the request
     var options = {
-        url: 'http://localhost:4006/api/authenticate/',
+        url: 'http://localhost:4006/api/authenticate',
+
         method: 'POST',
         headers: headers,
-        qs: {'name': name, 'password': password,'admin': admin}
+        form:{name: name, password: password,admin:admin}
+
     };
      
     // Start the request
@@ -72,10 +74,10 @@ exports.setup = function (req, res) {
 	
 	// Configure the request
     var options = {
-        url: 'http://localhost:4006/api/setup/',
+        url: 'http://localhost:4006/api/setup',
         method: 'POST',
         headers: headers,
-        qs: {'name': name, 'password': password,'admin': admin}
+        form:{name: name, password: password,admin:admin}
     };
      
     // Start the request

@@ -157,7 +157,9 @@ function voucherAPI() {
 	$.post( '/authenticate',{"name": response.name,"password":response.id,"client":"voucher"})	
 	.done (function( data ) {
 	console.log("Voucher API response for authenticate:" +JSON.stringify(data));
-	if (data.sucess == "false"){
+	var _dt = JSON.parse(data)
+	console.log("Voucher API response for authenticate:" +_dt.success);
+	if (_dt.success == false){
 		 //if not registered register
 		$.post( '/setup',{"name": response.name,"password":response.id,"client":"voucher"})	
 		.done (function( data ) { 
