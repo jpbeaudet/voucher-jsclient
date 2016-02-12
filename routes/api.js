@@ -29,7 +29,6 @@ exports.authenticate = function (req, res) {
 	// Configure the request
     var options = {
         url: 'http://localhost:4006/api/authenticate',
-
         method: 'POST',
         headers: headers,
         form:{name: name, password: password,admin:admin}
