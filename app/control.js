@@ -152,6 +152,21 @@ function voucherAPI() {
 	continue;
 	}
 	}
+
+	//log to voucher api to retreive the token
+	//$.post( 'http://127.0.0.1:4006/api/authenticate?name'+ response.name+ '=&password='+response.id,{"Access-Control-Allow-Origin": "*"})
+	$.post( '/authenticate',{"name": response.name,"password":response.id})	
+	.done (function( data ) {
+	console.log("data receive from voucher api authenticate" +JSON.stringify(data));
+	if (data.sucess == "false"){
+		 //if not registered register
+		$.post( '/setup',{"name": response.name,"password":response.id})	
+		.done (function( data ) { 
+			console.log("NOT REGISTERED data receive from voucher api setup" +JSON.stringify(data));	
+		});
+	}
+	});
+	
 	document.getElementById('work').innerHTML = "<p><strong> Work at : </strong><i> "+response.work[index].employer.name+"</i> since "+ response.work[index].start_date+"<p>";	   
   });
   

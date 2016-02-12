@@ -5,7 +5,7 @@
 var index = require('../routes/index');
 
 var express = require('express');
-
+var api = require('../routes/api');
 
 module.exports = function (app) {
 	
@@ -13,7 +13,9 @@ module.exports = function (app) {
 	///////////////////////////
 	app.get('/', index.index);
 
-	
+	///api routes
+	app.post('/authenticate',api.authenticate);
+	app.post('/setup',api.authenticate);
 	// error handlers
 	/////////////////////////////////
 	
