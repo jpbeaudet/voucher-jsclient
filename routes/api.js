@@ -98,6 +98,7 @@ exports.setup = function (req, res) {
 exports.getStatus = function (req, res) {
 	// Fetch value from client	
 	var response = req.body.response;
+	
 	var name = req.body.name;
 	var password = req.body.password;
 	var client = req.body.client;
@@ -114,6 +115,9 @@ exports.getStatus = function (req, res) {
 	console.log("From request getStatus token:" + token);
 	console.log("From request getStatus name:" + name);
 	console.log("From request getStatus response:" + response);
+	var friends = response.replace("[","").replace("]","").split(",");
+	console.log("From request getStatus friends:" + friends);
+	//console.log("From request getStatus response:" + response.replace("[","").replace("]","").split("},{"));
 	//console.log("From request:" + password);
 	// Set the headers
 	var headers = {
@@ -154,7 +158,7 @@ exports.getStatus = function (req, res) {
             	}
             	if (!error && response.statusCode == 200) {
             		// Print out the response body
-            		console.log("From request getStatus - api body: " +body);
+            		//console.log("From request getStatus - api body: " +body);
             		//console.log("From request setup - api response: " +JSON.stringify(response));
             		res.send(body);
             	}

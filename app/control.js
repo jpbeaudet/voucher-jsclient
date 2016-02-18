@@ -181,9 +181,16 @@ function voucherAPI() {
   // Here will go the friend dealing logics
   FB.api('/v2.0/me?fields=friendlists', function(response) {
 	    console.log('Friend_list Response: ' + JSON.stringify(response));
+	    console.log('Friend_list response.friendlists.data: ' + JSON.stringify(response.friendlists.data));
+	    var friends = new Array();
+	    for(x in response.friendlists.data){
+	    	friends.push(response.friendlists.data[x].id);
+	    }
+	    console.log('friends array: ' + JSON.stringify(friends));
+    
 	    setTimeout(function(){  
 			console.log("Voucher API token to send:" +_TOKEN);
-		$.post( '/getStatus',{"response" : response, "client":"voucher","token":_TOKEN,"name": _NAME, "password" : response.id})	
+		$.post( '/getStatus',{"response" : JSON.stringify(friends), "client":"voucher","token":_TOKEN,"name": _NAME, "password" : response.id})	
 		.done (function( data ) { 
 			console.log("Voucher API response for current status results:" +JSON.stringify(data));
 			}); }, 500);
