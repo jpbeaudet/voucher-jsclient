@@ -94,51 +94,6 @@ exports.setup = function (req, res) {
     
 };
 
-exports.authenticate = function (req, res) {
-	// Fetch value from client
-	var name = req.body.name;
-	name = name.replace(" ","_").toLowerCase();
-	var password = req.body.password;
-	var client = req.body.client;
-	var admin;
-	console.log("From request authenticate - client:" + client);
-	if(client == "voucher"){
-		admin = false;
-	}else{
-		admin = true;
-	}
-	console.log("From request authenticate - name:" + name);
-	console.log("From request authenticate - passowrd:" + password);
-	// Set the headers
-	var headers = {
-	    'User-Agent':       'Super Agent/0.0.1',
-	    'Content-Type':     'application/x-www-form-urlencoded',
-	    'Access-Control-Allow-Origin':     'http://localhost:8090'
-	};
-	
-	// Configure the request
-    var options = {
-        url: 'http://localhost:4006/api/authenticate',
-        method: 'POST',
-        headers: headers,
-        form:{name: name, password: password,admin:admin}
-
-    };
-     
-    // Start the request
-    request(options, function (error, response, body) {
-    	if(error){
-    		//console.log("From request authenticate - error:" + error);
-    	}
-        if (!error && response.statusCode == 200) {
-            // Print out the response body
-            //console.log("From request authenticate - api body: " +body);
-            //console.log("From request authenticate - api response: " +JSON.stringify(response));
-            res.send(body);
-        }
-    });
-       
-};
 
 exports.getStatus = function (req, res) {
 	// Fetch value from client
