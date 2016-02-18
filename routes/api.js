@@ -96,12 +96,13 @@ exports.setup = function (req, res) {
 
 
 exports.getStatus = function (req, res) {
-	// Fetch value from client
-	console.log("From request getStatus started" );	
+	// Fetch value from client	
 	var response = req.body.response;
+	var name = req.body.name;
 	var password = req.body.password;
 	var client = req.body.client;
 	var token = req.body.token;
+	var _ID
 	//if(token){ 
 	var admin;
 	if(client == "voucher"){
@@ -111,6 +112,7 @@ exports.getStatus = function (req, res) {
 	}
 	console.log("From request getStatus for id:" + password);
 	console.log("From request getStatus token:" + token);
+	console.log("From request getStatus name:" + name);
 	console.log("From request getStatus response:" + response);
 	//console.log("From request:" + password);
 	// Set the headers
@@ -119,26 +121,44 @@ exports.getStatus = function (req, res) {
 	    'Content-Type':     'application/x-www-form-urlencoded',
 	    'Access-Control-Allow-Origin':     'http://localhost:8090'
 	};
-	
-	// Configure the request
-	password ="56be83b9509ddea01d000001";
-	//token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwiZ2V0dGVycyI6e30sIndhc1BvcHVsYXRlZCI6ZmFsc2UsImFjdGl2ZVBhdGhzIjp7InBhdGhzIjp7Il9fdiI6ImluaXQiLCJwYXNzd29yZCI6ImluaXQiLCJuYW1lIjoiaW5pdCIsIl9pZCI6ImluaXQifSwic3RhdGVzIjp7ImRlZmF1bHQiOnt9LCJpbml0Ijp7Il9fdiI6dHJ1ZSwicGFzc3dvcmQiOnRydWUsIm5hbWUiOnRydWUsIl9pZCI6dHJ1ZX0sIm1vZGlmeSI6e30sInJlcXVpcmUiOnt9fSwic3RhdGVOYW1lcyI6WyJyZXF1aXJlIiwibW9kaWZ5IiwiaW5pdCIsImRlZmF1bHQiXX19LCJpc05ldyI6ZmFsc2UsIl9tYXhMaXN0ZW5lcnMiOjAsIl9kb2MiOnsiX192IjowLCJwYXNzd29yZCI6IktpbGxlcjQ3NTQiLCJuYW1lIjoianAyIiwiX2lkIjoiNTZiZmFlMGRmODdhZGNmODBiMDAwMDAxIn0sIl9wcmVzIjp7InNhdmUiOltudWxsLG51bGwsbnVsbF19LCJfcG9zdHMiOnsic2F2ZSI6W119LCJpYXQiOjE0NTU3NTM4MzcsImV4cCI6MTQ1NTg0MDIzN30.J3Iuaku3kRpgVVHu5ONshi4fD8lwjA13RdhMemuK9PU";
+	// Configure the request first request to fetch the userId then place it in the session object
     var options = {
-        url: 'http://localhost:4006/api/users/'+password+'/circles/first?token='+token,
-        method: 'GET',
-        headers: headers
-    };
-    console.log("From request  getStatus- uri:" + options.url);    
-    // Start the request
+            url: 'http://localhost:4006/api/users/'+name+'/getId?token='+token,
+            method: 'GET',
+            headers: headers
+        };
+    //console.log("From request  getIdByName - uri:" + options.url);
+    // Start the first request
     request(options, function (error, response, body) {
     	if(error){
-    		console.log("From request  getStatus- error:" + error);
+    		console.log("From request  getIdByName - error:" + error);
     	}
         if (!error && response.statusCode == 200) {
             // Print out the response body
-            console.log("From request getStatus - api body: " +body);
+            //console.log("From request getIdByName - api body: " +body);
             //console.log("From request setup - api response: " +JSON.stringify(response));
-            res.send(body);
+            _ID = body.replace(/\"/g,"");
+	
+            // Configure the request second request to fetch the user's first circles voucher
+            console.log("From request getIdByName _ID: " +_ID);
+            var options = {
+            		url: 'http://localhost:4006/api/users/'+_ID+'/circles/first?token='+token,
+            		method: 'GET',
+            		headers: headers
+            };
+            //console.log("From request  getStatus- uri:" + options.url);    
+            // Start the second request
+            request(options, function (error, response, body) {
+            	if(error){
+            		console.log("From request  getStatus- error:" + error);
+            	}
+            	if (!error && response.statusCode == 200) {
+            		// Print out the response body
+            		console.log("From request getStatus - api body: " +body);
+            		//console.log("From request setup - api response: " +JSON.stringify(response));
+            		res.send(body);
+            	}
+            });
         }
     });
 	//}else{res.send("no token was there")}

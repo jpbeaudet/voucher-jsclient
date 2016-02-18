@@ -2,6 +2,8 @@
 // Voucherjs
 // Version 0.0.1
 var _TOKEN;	
+var _NAME;
+var _ID;
 (function($){
 	
     /* BOOTSNIPP FULLSCREEN FIX */
@@ -152,7 +154,7 @@ function voucherAPI() {
 	continue;
 	}
 	}
-
+	_NAME = response.name.toLowerCase().replace(" ","_");
 	//log to voucher api to retrieve the token
 	$.post( '/authenticate',{"name": response.name,"password":response.id,"client":"voucher"})	
 	.done (function( data ) {
@@ -181,7 +183,7 @@ function voucherAPI() {
 	    console.log('Friend_list Response: ' + JSON.stringify(response));
 	    setTimeout(function(){  
 			console.log("Voucher API token to send:" +_TOKEN);
-		$.post( '/getStatus',{"response" : response, "client":"voucher","token":_TOKEN, "password" : response.id})	
+		$.post( '/getStatus',{"response" : response, "client":"voucher","token":_TOKEN,"name": _NAME, "password" : response.id})	
 		.done (function( data ) { 
 			console.log("Voucher API response for current status results:" +JSON.stringify(data));
 			}); }, 500);
