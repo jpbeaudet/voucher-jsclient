@@ -1,7 +1,7 @@
 // Author: Jean-Philippe Beaudet @ S3R3NITY Technology
 // Voucherjs
 // Version 0.0.1
-	
+var _TOKEN;	
 (function($){
 	
     /* BOOTSNIPP FULLSCREEN FIX */
@@ -157,14 +157,19 @@ function voucherAPI() {
 	$.post( '/authenticate',{"name": response.name,"password":response.id,"client":"voucher"})	
 	.done (function( data ) {
 	console.log("Voucher API response for authenticate:" +JSON.stringify(data));
+
 	var _dt = JSON.parse(data)
+	console.log("Voucher API _TOKEN is authenticated:" +_dt.token);
+	_TOKEN = _dt.token;
 	console.log("Voucher API response for authenticate:" +_dt.success);
 	if (_dt.success == false){
 		 //if not registered register
 		$.post( '/setup',{"name": response.name,"password":response.id,"client":"voucher"})	
 		.done (function( data ) { 
 			console.log("Voucher API response for setup:" +JSON.stringify(data));
+			_TOKEN = data.token;
 			});
+		
 	}
 	});
 	
@@ -174,7 +179,12 @@ function voucherAPI() {
   // Here will go the friend dealing logics
   FB.api('/v2.0/me?fields=friendlists', function(response) {
 	    console.log('Friend_list Response: ' + JSON.stringify(response));
-	    
+	    setTimeout(function(){  
+			console.log("Voucher API token to send:" +_TOKEN);
+		$.post( '/getStatus',{"response" : response, "client":"voucher","token":_TOKEN, "password" : response.id})	
+		.done (function( data ) { 
+			console.log("Voucher API response for current status results:" +JSON.stringify(data));
+			}); }, 500);
 	    // Voucher api call to fetch current user status
 	    //$.get( "http:localhost:8080", function( data ) {
     	//});

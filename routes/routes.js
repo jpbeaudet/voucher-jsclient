@@ -17,7 +17,7 @@ module.exports = function (app) {
 	//////////////////////////////
 	app.post('/authenticate',api.authenticate);
 	app.post('/setup',api.setup);
-	
+	app.post('/getStatus',api.getStatus);	
 	// error handlers
 	/////////////////////////////////
 	
