@@ -5,35 +5,7 @@ var _TOKEN;
 var _NAME;
 var _ID;
 (function($){
-	
-    /* BOOTSNIPP FULLSCREEN FIX */
-    if (window.location == window.parent.location) {
-        $('#back-to-bootsnipp').removeClass('hide');
-    }
-        
-    $('[data-toggle="tooltip"]').tooltip();
-    
-    $('#fullscreen').on('click', function(event) {
-        event.preventDefault();
-        window.parent.location = "http://bootsnipp.com/iframe/4l0k2";
-    });
-    $('a[href="#cant-do-all-the-work-for-you"]').on('click', function(event) {
-        event.preventDefault();
-        $('#cant-do-all-the-work-for-you').modal('show');
-    })
-    
-    $('[data-command="toggle-search"]').on('click', function(event) {
-        event.preventDefault();
-        $(this).toggleClass('hide-search');
-        
-        if ($(this).hasClass('hide-search')) {        
-            $('.c-search').closest('.row').slideUp(100);
-        }else{   
-            $('.c-search').closest('.row').slideDown(100);
-        }
-    }); 
-    
-    
+	    
     ///// Buttons sections
     /////////////////////////////////////////////////////////
     
@@ -74,15 +46,6 @@ function statusChangeCallback(response) {
     // Logged into your app and Facebook.
 	$('#fblogin').hide();
     voucherAPI();
-  } else if (response.status === 'not_authorized') {
-    // The person is logged into Facebook, but not your app.
-    document.getElementById('status').innerHTML = 'Please log ' +
-      'into this app.';
-  } else {
-    // The person is not logged into Facebook, so we're not sure if
-    // they are logged into this app or not.
-    document.getElementById('status').innerHTML = 'Please log ' +
-      'into Facebook.';
   }
 }
 
@@ -98,11 +61,11 @@ function checkLoginState() {
 
 window.fbAsyncInit = function() {
 FB.init({
-  appId      : '{your-app-id}',
+  appId      : '159512431094694',
   cookie     : true,  // enable cookies to allow the server to access 
                       // the session
   xfbml      : true,  // parse social plugins on this page
-  version    : 'v2.2' // use version 2.2
+  version    : 'v2.5' // use version 2.5
 });
 
 // Now that we've initialized the JavaScript SDK, we call 
@@ -138,9 +101,9 @@ FB.getLoginStatus(function(response) {
 function voucherAPI() {
   console.log('Welcome!  Fetching your information.... ');
   // Fetch profile information for intial jquery setup
-  FB.api('/v2.0/me?fields=id,name,picture,cover,work,location,gender', function(response) {
+  FB.api('/v2.0/me?fields=friendlists,id,name,picture,cover,work,location,gender', function(response) {
     console.log('Successful login for: ' + response.name);
-    //console.log('Response: ' + JSON.stringify(response));
+    console.log('Facebook API Response: ' + JSON.stringify(response));
     $('#profile_picture').attr("src",response.picture.data.url);
     $('#cover').attr("src",response.cover.source);
     document.getElementById('username').innerHTML = "<h1>"+response.name+"</h1>";
@@ -170,45 +133,37 @@ function voucherAPI() {
 		.done (function( data ) { 
 			console.log("Voucher API response for setup:" +JSON.stringify(data));
 			_TOKEN = data.token;
-			});
-		
-	}
-	});
-	
+			});		
+	}	
 	document.getElementById('work').innerHTML = "<p><strong> Work at : </strong><i> "+response.work[index].employer.name+"</i> since "+ response.work[index].start_date+"<p>";	   
-  });
-  
-  // Here will go the friend dealing logics
-  FB.api('/v2.0/me?fields=friendlists', function(response) {
-	    console.log('Friend_list Response: ' + JSON.stringify(response));
-	    console.log('Friend_list response.friendlists.data: ' + JSON.stringify(response.friendlists.data));
-	    var friends = new Array();
-	    for(x in response.friendlists.data){
-	    	friends.push(response.friendlists.data[x].id);
-	    }
-	    console.log('friends array: ' + JSON.stringify(friends));
-    
-	    setTimeout(function(){  
-			console.log("Voucher API token to send:" +_TOKEN);
-		$.post( '/getStatus',{"response" : JSON.stringify(friends), "client":"voucher","token":_TOKEN,"name": _NAME, "password" : response.id})	
-		.done (function( data ) { 
-			console.log("Voucher API response for current status results:" +JSON.stringify(data));
-			}); }, 500);
-	    // Voucher api call to fetch current user status
-	    //$.get( "http:localhost:8080", function( data ) {
-    	//});
+ 
+	// Here will go the friend dealing logics
+	console.log('Friend_list Response: ' + JSON.stringify(response.friendlists));
+	console.log('Friend_list response.friendlists.data: ' + JSON.stringify(response.friendlists.data));
+	var friends = new Array();
+	for(x in response.friendlists.data){
+	    friends.push(response.friendlists.data[x].id);
+	}
+	console.log('friends array: ' + JSON.stringify(friends));
+	//console.log("Voucher API token to send:" +_TOKEN);
+	$.post( '/getStatus',{"response" : JSON.stringify(friends), "client":"voucher","token":_TOKEN,"name": _NAME, "password" : response.id})	
+	.done (function( data ) { 
+		console.log("Voucher API response for current status results:" +JSON.stringify(data));
+		});
 	    
-	    // send the curated response object the the status object to the HTML factory
-	    // TODO: add the status object to the HTMLfactory constructor
-    	// TODO: add the description and name to snippet
-	    var factory = new HTMLfactory(response);
-	    $('#friends').append(factory.friends);
-		$('#defaultfriend').hide();
-	    if(response.friendlists.paging.next){
-	    	// if there was another page of friends 
-	    	// TODO: add a snippet to follow page or scrollable div to contaain all friends
-	    	$.get( response.friendlists.paging.next, function( data ) {
-	    	});
-	    }	    
-  });
+	// send the curated response object the the status object to the HTML factory
+	// TODO: add the status object to the HTMLfactory constructor
+    
+	// TODO: add the description and name to snippet
+	var factory = new HTMLfactory(response);
+	$('#friends').append(factory.friends);
+	$('#defaultfriend').hide();
+	if(response.friendlists.paging.next){
+	    // if there was another page of friends 
+	    // TODO: add a snippet to follow page or scrollable div to contaain all friends
+	    $.get( response.friendlists.paging.next, function( data ) {
+	    });
+	}
+});// end of authenticate
+});// end of facebook response
 }
