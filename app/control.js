@@ -151,7 +151,7 @@ function voucherAPI() {
 		console.log("Voucher API response for current status results:" +JSON.stringify(data));
 		});
 	    
-	// send the curated response object the the status object to the HTML factory
+	// send the curated response object of the status object to the HTML factory
 	// TODO: add the status object to the HTMLfactory constructor
     
 	// TODO: add the description and name to snippet
